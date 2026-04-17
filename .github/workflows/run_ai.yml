@@ -2,10 +2,7 @@ name: Investment AI Analysis
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * 1'
 
-# 警告に対応するための設定（環境変数をセット）
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -17,9 +14,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12' # さらに最新の3.12に上げます
+          python-version: '3.12' # 最新のPythonを指定
       - name: Install dependencies
-        run: pip install -qU google-genai
+        run: pip install -qU google-genai # 新しいライブラリをインストール
       - name: Run analysis
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
