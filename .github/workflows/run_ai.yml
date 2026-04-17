@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: '0 0 * * 1'
 
+# 警告に対応するための設定（環境変数をセット）
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,9 +17,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 3.10から3.11へアップ
+          python-version: '3.12' # さらに最新の3.12に上げます
       - name: Install dependencies
-        run: pip install -qU google-genai # 最新のgenaiライブラリをインストール
+        run: pip install -qU google-genai
       - name: Run analysis
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
