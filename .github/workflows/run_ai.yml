@@ -1,9 +1,9 @@
 name: Investment AI Analysis
 
 on:
-  workflow_dispatch: # ボタン一つで手動実行できる設定
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 1' # 毎週月曜日の朝9時（日本時間）に自動実行
+    - cron: '0 0 * * 1'
 
 jobs:
   build:
@@ -13,9 +13,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11' # 3.10から3.11へアップ
       - name: Install dependencies
-        run: pip install google-generativeai
+        run: pip install -qU google-genai # 最新のgenaiライブラリをインストール
       - name: Run analysis
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
