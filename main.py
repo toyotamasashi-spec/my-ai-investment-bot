@@ -1,18 +1,31 @@
 import os
-import google.generativeai as genai
+from google import genai
 
 def main():
-    # GitHubのSecretから読み込み
-    api_key = os.getenv("GOOGLE_API_KEY")
-    genai.configure(api_key=api_key)
+    # GitHubのSecretからキーを取得
+    api_key = os.environ.get("GOOGLE_API_KEY")
+    if not api_key:
+        print("APIキーが設定されていません。")
+        return
+
+    # 最新のClient方式で接続
+    client = genai.Client(api_key=api_key)
     
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    prompt = """
+    シグマ光機(7713)とエヌエフHD(6864)について、量子コンピュータ関連の
+    最新ニュースを踏まえた投資判断のポイントを3点にまとめてください。
+    """
     
-    prompt = "シグマ光機(7713)とエヌエフHD(6864)の最新の技術動向を分析して。"
-    response = model.generate_content(prompt)
-    
-    print("--- 投資分析レポート ---")
-    print(response.text)
+    try:
+        # 404エラーを回避する最新の呼び出し方
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
+        print("--- AI投資分析レポート ---")
+        print(response.text)
+    except Exception as e:
+        print(f"エラーが発生しました: {e}")
 
 if __name__ == "__main__":
     main()
