@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.12' # 最新のPythonを指定
       - name: Install dependencies
-        run: pip install -qU google-genai # 新しいライブラリをインストール
+        run: pip install -qU google genai # 新しいライブラリをインストール
       - name: Run analysis
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
