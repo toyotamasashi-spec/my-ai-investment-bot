@@ -2,30 +2,23 @@ import os
 from google import genai
 
 def main():
-    # GitHubのSecretからキーを取得
     api_key = os.environ.get("GOOGLE_API_KEY")
     if not api_key:
-        print("APIキーが設定されていません。")
+        print("APIキーがありません。Settingsを確認してください。")
         return
 
-    # 最新のClient方式で接続
+    # 最新のClient方式を使用。これで404エラーを回避します。
     client = genai.Client(api_key=api_key)
     
-    prompt = """
-    シグマ光機(7713)とエヌエフHD(6864)について、量子コンピュータ関連の
-    最新ニュースを踏まえた投資判断のポイントを3点にまとめてください。
-    """
-    
     try:
-        # 404エラーを回避する最新の呼び出し方
         response = client.models.generate_content(
             model="gemini-1.5-flash",
-            contents=prompt
+            contents="シグマ光機(7713)とエヌエフHD(6864)の将来性を分析して。"
         )
-        print("--- AI投資分析レポート ---")
+        print("--- 分析結果 ---")
         print(response.text)
     except Exception as e:
-        print(f"エラーが発生しました: {e}")
+        print(f"実行エラー: {e}")
 
 if __name__ == "__main__":
     main()
